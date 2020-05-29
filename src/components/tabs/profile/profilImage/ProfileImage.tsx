@@ -1,4 +1,5 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
+import {Camera} from "@ionic-native/camera";
 import {
     IonAvatar,
     IonBackButton,
@@ -23,40 +24,63 @@ import {
 } from '@ionic/react';
 import PropTypes from 'prop-types';
 import './profileImage.scss'
-import {football, barbellSharp, musicalNoteSharp, musicalNotesSharp} from 'ionicons/icons';
+import {
+    logoNoSmoking,
+    barbellSharp,
+    beerOutline,
+    musicalNotesSharp,
+    pawOutline,
+    peopleOutline
+} from 'ionicons/icons';
+import {log} from "util";
 
-const propTypes = {
+const propTypes = {};
 
-};
+const defaultProps = {};
 
-const defaultProps = {
-
-};
-
-const ProfileImage: FC = () =>{
+const ProfileImage: FC = () => {
     const [text, setText] = useState<string>();
     const [selectedDate, setSelectedDate] = useState<string>();
-    const [selected, setSelected] = useState<string>('biff');
     const [gender, setGender] = useState<string>();
 
+    useEffect(() => {
+
+    }, [])
+
+    const takePhoto = () => {
+        Camera.getPicture({
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetWidth: 1000,
+            targetHeight: 1000
+        }).then((imageData) => {
+            // imageData is a base64 encoded string
+            const base64Image = "data:image/jpeg;base64," + imageData;
+            console.log(base64Image)
+        }, (err) => {
+            console.log(err);
+        });
+    };
+
     return (
-        <>
-            <IonBackButton
-                className="backButton"
-                defaultHref="home"
-            />
-            <IonAvatar className="profile_avatar">
-                <img className="profile_avatar_image"
-                     src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                     alt="avatarImg"
-                />
-            </IonAvatar>
-            <div className="profile_input_container">
+        <div className="profile">
+            <IonAvatar
+                className="profile_avatar"
+            >
+                <div>
+                    <img
+                        className="profile_avatar_image"
+                        src="https://www.glass-inspiration.com/wp-content/uploads/2020/01/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
+                        alt="avatarImg"
+                    />
+                </div>
                 <IonInput
+                    className="profile_name"
                     value={text}
                     placeholder="Name"
                     onIonChange={e => setText(e.detail.value!)}
                 />
+            </IonAvatar>
+            <div className="profile_input_container">
                 <IonItem>
                     <IonLabel>Geburtstag</IonLabel>
                     <IonDatetime
@@ -80,7 +104,7 @@ const ProfileImage: FC = () =>{
                     </IonSelect>
                 </IonItem>
                 <IonItem>
-                    <IonIcon icon={musicalNotesSharp} />
+                    <IonIcon icon={musicalNotesSharp}/>
                     <IonSelect
                         value={gender}
                         placeholder="Musik"
@@ -94,10 +118,10 @@ const ProfileImage: FC = () =>{
                     </IonSelect>
                 </IonItem>
                 <IonItem>
-                    <IonIcon icon={barbellSharp}>Sport</IonIcon>
+                    <IonIcon icon={logoNoSmoking}>Sport</IonIcon>
                     <IonSelect
                         value={gender}
-                        placeholder="Sport"
+                        placeholder="Rauchen"
                         onIonChange={e => setGender(e.detail.value)}
                     >
                         <IonSelectOption value="selten">selten</IonSelectOption>
@@ -106,10 +130,10 @@ const ProfileImage: FC = () =>{
                     </IonSelect>
                 </IonItem>
                 <IonItem>
-                    <IonIcon icon={barbellSharp}>Sport</IonIcon>
+                    <IonIcon icon={beerOutline}>Sport</IonIcon>
                     <IonSelect
                         value={gender}
-                        placeholder="Sport"
+                        placeholder="Alkohol"
                         onIonChange={e => setGender(e.detail.value)}
                     >
                         <IonSelectOption value="selten">selten</IonSelectOption>
@@ -117,8 +141,30 @@ const ProfileImage: FC = () =>{
                         <IonSelectOption value="häufig">häufig</IonSelectOption>
                     </IonSelect>
                 </IonItem>
+                <IonItem>
+                    <IonIcon icon={pawOutline}>Sport</IonIcon>
+                    <IonSelect
+                        value={gender}
+                        placeholder="Haustiere"
+                        onIonChange={e => setGender(e.detail.value)}
+                    >
+                        <IonSelectOption value="Ja">Ja</IonSelectOption>
+                        <IonSelectOption value="Nein">Nein</IonSelectOption>
+                    </IonSelect>
+                </IonItem>
+                <IonItem>
+                    <IonIcon icon={peopleOutline}>Sport</IonIcon>
+                    <IonSelect
+                        value={gender}
+                        placeholder="Kinder"
+                        onIonChange={e => setGender(e.detail.value)}
+                    >
+                        <IonSelectOption value="Ja">Ja</IonSelectOption>
+                        <IonSelectOption value="Nein">Nein</IonSelectOption>
+                    </IonSelect>
+                </IonItem>
             </div>
-        </>
+        </div>
     );
 };
 
