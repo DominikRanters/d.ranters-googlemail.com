@@ -1,15 +1,26 @@
-.backButton{
+.backButton {
   float: left;
 }
 
-.profile_avatar {
-  margin: 100px auto;
-  width: 120px;
-  height: 120px;
+.profile {
+  padding: 5%;
 
-  &_image {
-    display: block;
+  &_avatar {
+    margin: 10% auto 5%;
+    width: 45%;
+    height: auto;
 
+    &_image {
+      display: block;
+
+    }
+  }
+
+  &_name {
+    margin-top: 20px;
+    padding-start: 10px;
+    text-align: center;
+    width: auto;
   }
 }
 
